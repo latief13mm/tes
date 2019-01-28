@@ -1,0 +1,33 @@
+resume.iteams:
+ path: '/resume/alliteams'
+ defaults:
+   _title: 'List all Iteam'
+   _controller: '\Drupal\resume\Controller\Display::showdata'
+ requirements:
+   _permission: 'access content'
+
+resume.form:
+ path: '/resume/myform'
+ defaults:
+   _title: 'Application form'
+   _form: '\Drupal\resume\Form\ResumeForm'
+ requirements:
+   _permission: 'access content'
+   
+resume.delete_form:
+ path: '/resume/myform/{cid}/delete'
+ defaults:
+   _title: 'Delete Form'
+   _form: '\Drupal\resume\Form\DeleteForm'
+ requirements:
+   _permission: 'access content'
+   _access: 'TRUE'
+
+resume.edit_form:
+ path: '/resume/myform/{cid}/edit'
+ defaults:
+   _title: 'Edit Form'
+   _form: '\Drupal\resume\Form\ResumeForm'
+ requirements:
+   _permission: 'access content'
+   _access: 'TRUE'   

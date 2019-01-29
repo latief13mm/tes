@@ -13,6 +13,9 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 
 class ResumeForm extends FormBase {
   /**
@@ -32,7 +35,40 @@ class ResumeForm extends FormBase {
             ->condition('iid', $cid)
             ->fields('m');
 			$record = $query->execute()->fetchAssoc();
-			
+
+	$query_name = $connection->select('iteams','m')            
+            ->fields('m');
+			$record_name = $query_name->execute()->fetchAllAssoc('iid');
+	
+	$rows = array();
+    foreach ($record_name as $row => $content) {
+		
+      $rows[$content->iid] = $content->iteam_name;
+    }	
+
+	$form['message'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="result_message"></div>',
+    ];
+	$form['user_email'] = array(
+		'#type' => 'select',
+		'#title' => 'User or Email',
+		'#options' => $rows,
+		'#default_value' => (isset($record['iteam_offer']) && $cid) ? $record['iteam_offer']:'',
+		'#prefix' => '<div id="user-email-result"></div>',
+		'#ajax' => array(
+		'callback' => '::checkUserEmailValidation',
+			'effect' => 'fade',
+			'event' => 'change',
+			'progress' => array(
+				'type' => 'throbber',
+				'message' => NULL,
+			),    
+		)
+	);
+      
+      
+  			
 
     $form['iteam_name'] = array(
       '#type' => 'textfield',
@@ -97,7 +133,21 @@ class ResumeForm extends FormBase {
     );
     return $form;
   }
+	public function checkUserEmailValidation(array $form, FormStateInterface $form_state) {
+		$ajax_response = new AjaxResponse();
 
+		// Check if User or email exists or not
+		if (user_load_by_name($form_state->getValue(user_email)) || user_load_by_mail($form_state->getValue(user_email))) {
+		 $text = 'User or Email is exists';
+		} else {
+		 $text = 'User or Email does not exists';
+		}
+		$ajax_response->addCommand(new ReplaceCommand('#edit-iteam-name', '<input value='. $text .' />'));
+		$ajax_response->addCommand(new ReplaceCommand('#edit-iteam-detail', '<input value='. $text .' />'));
+		//$ajax_response->addCommand(new HtmlCommand('#user-email-result', $text));
+		return $ajax_response;
+	}
+	
   /**
    * {@inheritdoc}
    */

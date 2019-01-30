@@ -50,6 +50,29 @@ class ResumeForm extends FormBase {
       '#type' => 'markup',
       '#markup' => '<div class="result_message"></div>',
     ];
+	
+	for($i=0; $i<=3; $i++){
+	$form['repas'][$i]['detail']['midi']['mois_midi_'.$i] = [
+              '#type' => 'select',
+              '#data'=>$i,
+			  '#prefix' => '<div id="user-email-result-'.$i.'"></div>',
+              '#options'=>array(
+                  ''=>'Role',
+                  '01'=>'Admin',
+                  '02'=>'Co-admin',
+                  '03'=>'Anonymous',
+
+              ),
+              '#ajax'   => [
+                  'event' => 'change',
+                  'effet'=>'fade',
+                  'wrapper'=>'legumes'.$i,
+                  'method'=>'replace',
+                  'callback' => array($this,'changeLegumeCallback'),
+              ],
+              
+          ];
+	}
 	$form['user_email'] = array(
 		'#type' => 'select',
 		'#title' => 'User or Email',
@@ -133,6 +156,13 @@ class ResumeForm extends FormBase {
     );
     return $form;
   }
+	public function changeLegumeCallback(array &$form, FormStateInterface $form_state){
+		$ajax_response = new AjaxResponse();
+		$text = $form_state->getTriggeringElement()['#data'];
+		//Update Query here.
+		$ajax_response->addCommand(new HtmlCommand('#user-email-result-'.$text, 'Role updated'));
+		return $ajax_response;
+	}
 	public function checkUserEmailValidation(array $form, FormStateInterface $form_state) {
 		$ajax_response = new AjaxResponse();
 

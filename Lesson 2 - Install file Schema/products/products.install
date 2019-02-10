@@ -1,0 +1,61 @@
+<?php
+/**
+ * Implements hook_install().
+ *
+ * Creates some default entries on this module custom table.
+ *
+ * @see hook_install()
+ *
+ * @ingroup products
+ */
+function products_install() {
+  $database = \Drupal::database();
+  
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup products_example
+ */
+function products_schema() {
+  $schema['products'] = [
+    'description' => 'Stores products information.',
+    'fields' => [
+      'pid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key Unique person ID.',
+      ],
+      'product_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => "Store the product name given by user",
+      ],
+      'product_detail' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => "Store the product detail given by user",
+      ],
+      'product_address' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => "Store the product address given by user",
+      ],
+      'product_age' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'The age of the product in years.',
+      ],
+    ],
+    'primary key' => ['pid']
+  ];
+
+  return $schema;
+}

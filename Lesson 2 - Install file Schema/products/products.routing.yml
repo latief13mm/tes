@@ -1,0 +1,7 @@
+products.form:
+ path: '/product/add'
+ defaults:
+   _title: 'Add New products Detail'
+   _form: '\Drupal\products\Form\ProductForm'
+ requirements:
+   _permission: 'access content'  

@@ -1,0 +1,15 @@
+products.form:
+ path: '/product/add'
+ defaults:
+   _title: 'Add New products Detail'
+   _form: '\Drupal\products\Form\ProductForm'
+ requirements:
+   _permission: 'access content'
+
+products.products:
+ path: '/product'
+ defaults:
+   _title: 'List all Products'
+   _controller: '\Drupal\products\Controller\Display::showdata'
+ requirements:
+   _permission: 'access content'

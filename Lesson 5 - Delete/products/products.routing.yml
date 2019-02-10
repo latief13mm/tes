@@ -1,0 +1,33 @@
+products.form:
+ path: '/product/add'
+ defaults:
+   _title: 'Add New products Detail'
+   _form: '\Drupal\products\Form\ProductForm'
+ requirements:
+   _permission: 'access content'
+
+products.products:
+ path: '/product'
+ defaults:
+   _title: 'List all Products'
+   _controller: '\Drupal\products\Controller\Display::showdata'
+ requirements:
+   _permission: 'access content'
+   
+products.edit_form:
+ path: '/product/{cid}/edit'
+ defaults:
+   _title: 'Edit Form'
+   _form: '\Drupal\products\Form\ProductForm'
+ requirements:
+   _permission: 'access content'
+   _access: 'TRUE'
+
+products.delete_form:
+ path: '/product/{cid}/delete'
+ defaults:
+   _title: 'Delete Form'
+   _form: '\Drupal\products\Form\DeleteForm'
+ requirements:
+   _permission: 'access content'
+   _access: 'TRUE'

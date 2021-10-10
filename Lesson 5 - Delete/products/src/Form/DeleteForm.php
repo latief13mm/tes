@@ -52,7 +52,7 @@ class DeleteForm extends ConfirmFormBase {
 
 		$query = \Drupal::database();
 		//echo $this->id; die;
-		$query->delete('products')
+		$query->delete('barangs')
 			->condition('pid',$this->id)
 			->execute();
 		drupal_set_message("succesfully deleted");

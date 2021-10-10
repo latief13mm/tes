@@ -30,33 +30,27 @@ class ProductForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $cid = NULL) {
     $this->iid = $cid;
-    $form['product_name'] = array(
+    $form['barang_nama'] = array(
       '#type' => 'textfield',
-      '#title' => t('Iteam Name:'),
+      '#title' => t('Iteam Nama:'),
       '#required' => TRUE,
-	  '#default_value' => (isset($record['iteam_name']) && $cid) ? $record['product_name']:'',
+	  '#default_value' => (isset($record['iteam_nama']) && $cid) ? $record['barang_nama']:'',
     );
 
-    $form['product_detail'] = array(
+    $form['barang_harga'] = array(
       '#type' => 'textfield',
-      '#title' => t('Iteam Detail:'),
+      '#title' => t('Iteam Harga:'),
       '#required' => TRUE,
-	  '#default_value' => (isset($record['iteam_detail']) && $cid) ? $record['product_detail']:'',
+	  '#default_value' => (isset($record['iteam_harga']) && $cid) ? $record['barang_harga']:'',
     );
 
-    $form['product_address'] = array (
+    $form['barang_gambar'] = array (
       '#type' => 'textfield',
-      '#title' => t('Address:'),
-	  '#default_value' => (isset($record['iteam_address']) && $cid) ? $record['product_address']:'',
+      '#title' => t('Iteam Gambar:'),
+	  '#default_value' => (isset($record['iteam_gambar']) && $cid) ? $record['barang_gambar']:'',
     );
 
-    $form['product_age'] = array (
-      '#type' => 'textfield',
-      '#title' => t('Purchaged on'),
-      '#required' => TRUE,
-	  '#default_value' => (isset($record['iteam_age']) && $cid) ? $record['product_age']:'',
-    );
-
+   
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = array(
       '#type' => 'submit',
@@ -80,12 +74,11 @@ class ProductForm extends FormBase {
 	$connection = \Drupal :: database();
 	if($this->iid){
 		
-		$query = $connection->update('products');
+		$query = $connection->update('barangs');
 		$query->fields([
-			'product_name'=>$form_state->getValue('product_name'),
-			'product_detail'=>$form_state->getValue('product_detail'),
-			'product_address'=>$form_state->getValue('product_address'),
-			'product_age'=>$form_state->getValue('product_age'),
+			'barang_nama'=>$form_state->getValue('barang_nama'),
+			'barang_harga'=>$form_state->getValue('barang_harga'),
+			'barang_gambar'=>$form_state->getValue('barang_gambar'),
 		]);
 		$query->condition('pid', $this->iid);
 		$query->execute();   
@@ -93,13 +86,12 @@ class ProductForm extends FormBase {
 		
 	}
 	else{
-		$query = $connection->insert('products');
+		$query = $connection->insert('barangs');
 		$query->fields([
 			'pid'=>'',
-			'product_name'=>$form_state->getValue('product_name'),
-			'product_detail'=>$form_state->getValue('product_detail'),
-			'product_address'=>$form_state->getValue('product_address'),
-			'product_age'=>$form_state->getValue('product_age'),
+      'barang_nama'=>$form_state->getValue('barang_nama'),
+      'barang_harga'=>$form_state->getValue('barang_harga'),
+      'barang_gambar'=>$form_state->getValue('barang_gambar'),
 		]);
 		$query->execute();  
         drupal_set_message("One row succesfully inserted");

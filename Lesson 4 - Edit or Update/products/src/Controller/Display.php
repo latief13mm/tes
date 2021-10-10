@@ -25,8 +25,8 @@ class Display extends ControllerBase {
    *   Return Table format data.
    */
   public function showdata() {
-      $result = \Drupal::database()->select('products', 'n')
-            ->fields('n', array('pid', 'product_name', 'product_detail'))
+      $result = \Drupal::database()->select('barangs', 'n')
+            ->fields('n', array('pid', 'barang_nama', 'barang_harga'))
             ->execute()->fetchAllAssoc('pid');
       // Create the row element.
     $rows = array();

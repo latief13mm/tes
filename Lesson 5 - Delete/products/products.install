@@ -23,7 +23,7 @@ function products_install() {
  * @ingroup products_example
  */
 function products_schema() {
-  $schema['products'] = [
+  $schema['barangs'] = [
     'description' => 'Stores products information.',
     'fields' => [
       'pid' => [
@@ -31,27 +31,20 @@ function products_schema() {
         'not null' => TRUE,
         'description' => 'Primary Key Unique person ID.',
       ],
-      'product_name' => [
+      'barang_nama' => [
         'type' => 'varchar',
         'length' => 255,
         'description' => "Store the product name given by user",
       ],
-      'product_detail' => [
+      'barang_harga' => [
         'type' => 'varchar',
         'length' => 255,
-        'description' => "Store the product detail given by user",
+        'description' => "Store the product price given by user",
       ],
-      'product_address' => [
+      'product_gambar' => [
         'type' => 'varchar',
         'length' => 255,
-        'description' => "Store the product address given by user",
-      ],
-      'product_age' => [
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-        'size' => 'tiny',
-        'description' => 'The age of the product in years.',
+        'description' => "Store the product picture given by user",
       ],
     ],
     'primary key' => ['pid']
